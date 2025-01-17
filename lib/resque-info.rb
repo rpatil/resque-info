@@ -4,6 +4,8 @@ require_relative './resque-info/common.rb'
 require_relative './resque-info/base.rb'
 require_relative './resque-info/queues.rb'
 require_relative './resque-info/redis.rb'
+require_relative './resque-info/jobs.rb'
+require_relative './resque-info/workers.rb'
 
 require 'time'
 require 'digest'

@@ -1,21 +1,29 @@
 module ResqueInfo
   class << self
-    def queues
+    def resque_redis
+      Resque.redis
+    end
+
+    def resque_workers
+      Resque.workers
+    end
+
+    def resque_queues
       Resque.queues
     end
 
-    def failed_jobs
+    def resque_failed_jobs
       Resque::Failure
     end
 
-    def failed_jobs_count
-      failed_jobs.count
+    def resque_failed_jobs_count
+      resque_failed_jobs.count
     end
 
-    def failed_jobs_count_by_class
+    def resque_failed_jobs_count_by_class
       klass_name = []
-      (0...failed_jobs_count).step(BATCH_SIZE) do |start|
-        failed_jobs.all(start, BATCH_SIZE).each do |job|
+      (0...resque_failed_jobs_count).step(BATCH_SIZE) do |start|
+        resque_failed_jobs.all(start, BATCH_SIZE).each do |job|
           next if job.nil?
           klass_name << job['payload']['class'].to_s
         rescue StandardError => error
@@ -25,10 +33,10 @@ module ResqueInfo
       klass_name.group_by(&:itself).transform_values(&:count)
     end
 
-    def failed_jobs_count_by_queue
+    def resque_failed_jobs_count_by_queue
       job_queue = []
-      (0...failed_jobs_count).step(BATCH_SIZE) do |start|
-        failed_jobs.all(start, BATCH_SIZE).each do |job|
+      (0...resque_failed_jobs_count).step(BATCH_SIZE) do |start|
+        resque_failed_jobs.all(start, BATCH_SIZE).each do |job|
           next if job.nil?
           job_queue << job['queue'].to_s
         rescue StandardError => error

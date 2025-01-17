@@ -4,7 +4,7 @@ require 'resque-info/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'resque-info'
-  spec.version       = '0.0.1'
+  spec.version       = '0.0.2'
   spec.authors       = ['Rahul Patil']
   spec.email         = ['rahupatil_scs@yahoo.co.in']
   spec.summary       = 'Resque Info'
